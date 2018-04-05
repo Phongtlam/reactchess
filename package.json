@@ -1,0 +1,36 @@
+{
+  "name": "my-app",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "antd": "^3.4.0",
+    "react": "^16.3.1",
+    "react-dom": "^16.3.1",
+    "react-scripts-redux-ts": "1.2.1"
+  },
+  "scripts": {
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject",
+    "create:component": "./node_modules/hygen/lib/bin.js component create",
+    "create:store:item": "./node_modules/hygen/lib/bin.js store create"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "^react-native$": "react-native-web",
+      "@App/(.*)": "<rootDir>/src/$1"
+    }
+  },
+  "devDependencies": {
+    "@types/history": "^4.6.2",
+    "@types/jest": "^22.2.2",
+    "@types/node": "^9.6.2",
+    "@types/react": "^16.3.5",
+    "@types/react-dom": "^16.0.4",
+    "@types/react-redux": "^5.0.15",
+    "@types/redux": "^3.6.0",
+    "@types/redux-thunk": "^2.1.0",
+    "typescript": "^2.8.1"
+  }
+}
