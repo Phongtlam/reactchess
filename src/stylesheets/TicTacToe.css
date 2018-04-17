@@ -1,0 +1,20 @@
+.tictactoe-square {
+  height: 100px;
+  width: 100px;
+}
+
+.tictactoe-row {
+  display: flex;
+}
+
+.tictactoe-piece {
+  font-size: 50px;
+}
+
+.tictactoe-piece-X {
+  color: #cf1322;
+}
+
+.tictactoe-piece-O {
+  color: #096dd9;
+}

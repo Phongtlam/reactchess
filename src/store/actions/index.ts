@@ -1,8 +1,8 @@
 import { getReturnOfExpression } from 'typesafe-actions';
-import { counterActions } from '@App/store/actions/counter/counterActions';
+import { tictactoeActions } from '@App/store/actions/tictactoe/tictactoeActions';
 
 export const allActions = {
-  ...counterActions
+  ...tictactoeActions
 };
 
 const returnOfActions = Object.values(allActions).map(getReturnOfExpression);

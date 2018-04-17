@@ -1,0 +1,7 @@
+.roomdetails-wrapper {
+  display: flex;
+}
+
+.roomdetails--mid-pane {
+  margin-right: 20px;
+}
