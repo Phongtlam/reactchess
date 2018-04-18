@@ -15,7 +15,7 @@ interface MenuState {
 
 class Menu extends React.Component<MenuProps, MenuState> {
   state = {
-    roomIdInput: ''
+    roomIdInput: '',
   };
 
   public render() {
@@ -27,12 +27,14 @@ class Menu extends React.Component<MenuProps, MenuState> {
           <span className="menu--header-room-text">Current users: {this.props.roomUsers.length}</span>
         </div>
         <div className="menu--content">
-          <Input
-            placeholder="new room ID"
-            value={this.state.roomIdInput}
-            onChange={this.onRoomIdInput}
-          />
-          <Button onClick={this.joinNewRoom} type="primary" className="menu--content-join-btn">Join</Button>
+          <div className="menu--content-item">
+            <Input
+              placeholder="new room ID"
+              value={this.state.roomIdInput}
+              onChange={this.onRoomIdInput}
+            />
+            <Button onClick={this.joinNewRoom} type="primary" className="menu--content-join-btn">Join</Button>
+          </div>
         </div>
       </div>
     );

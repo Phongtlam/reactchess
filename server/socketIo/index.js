@@ -12,8 +12,12 @@ module.exports = (server) => {
   io.on('connect', (socket) => {
     console.log('new user connected on socketId', socket.id); 
     
-    const emitter = (roomId, channel, payload) => {
-      io.in(roomId).emit(channel, payload)
+    const emitter = (roomId, channel, payload, otherOnly) => {
+      if (otherOnly) {
+        socket.to(roomId).emit(channel, payload);
+      } else {
+        io.in(roomId).emit(channel, payload);
+      }
     };
 
     redisClient.keys('*', (err, roomList) => {
@@ -44,7 +48,7 @@ module.exports = (server) => {
 
     let numRounds = 0;
     socket.on('board-update', (fen, isAi, isStart, orientation) => {
-      emitter(roomId, 'board-update', fen);
+      emitter(roomId, 'board-update', fen, true);
       if (isAi) {
         if (isStart) {
           game.reset();

@@ -10,12 +10,10 @@ import { ActionCreatorsMapObject, bindActionCreators } from 'redux';
 // import TicTacToeBoard from '@App/components/tictactoe/TicTacToeBoard';
 import { tictactoeActions } from '@App/store/actions/tictactoe/tictactoeActions';
 // import { playerMove } from '../../store/thunk';
-// import Chessboard from '@App/components/Chess/Chessboard';
 import SocketIo from '../../socket.io.client';
 import WelcomeModal from '@App/components/WelcomeModal/WelcomeModal';
 import RoomDetails from '@App/components/RoomDetails/RoomDetails';
 import Menu from '@App/components/Menu/Menu';
-// import ChessFooter from '@App/components/ChessFooter/ChessFooter';
 
 interface AppProps {
   counter: Readonly<number>;
@@ -126,7 +124,7 @@ class App extends React.Component<AppProps, AppState> {
       'board-update',
       chessObj.fen(),
       this.state.gameType === 'ai' ? true : false, false,
-      this.state.orientation
+      this.state.orientation,
     );
   }
 
@@ -160,7 +158,7 @@ class App extends React.Component<AppProps, AppState> {
       gameStatus: {
         message,
         type,
-        showIcon
+        showIcon,
       }
     });
   }
