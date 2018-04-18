@@ -1,0 +1,77 @@
+.chatclient--textarea {
+  width: 400px;
+  height: 500px;
+  border: 1px solid #e8e8e8;
+  margin-bottom: 10px;
+  background-color: #f5f5f5;
+  padding: 5px;
+  overflow-y: scroll;
+}
+
+.chatclient-wrapper {
+  float: left;
+}
+
+.chatclient-wrapper.self {
+  float: right;
+}
+
+.chatclient--message {
+  width: 200px;
+  position: relative;
+  border-radius: 5px;
+  box-shadow: 0 10px 6px -6px #777;
+  overflow-wrap: break-word;
+  padding: 5px;
+  margin: 10px;
+  background-color: #13c2c2;
+  color: #fff;
+}
+
+.chatclient--message.self {
+  background-color: #2f54eb;
+  float: right;
+  clear: both;
+}
+
+.chatclient--message::after {
+	bottom: 100%;
+	left: 5%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	border-bottom-color: #13c2c2;
+	border-width: 6px;
+}
+
+.chatclient--message.self::after {
+  left: 90%;
+	border-color: transparent;
+	border-bottom-color: #2f54eb;
+}
+
+.chatclient--user {
+  display: inline-block;
+  border-radius: 5px;
+  background-color: #fff;
+  color: #8c8c8c;
+  line-height: normal;
+  padding: 5px;
+}
+
+.chatclient--user.self {
+  float: right;
+}
+
+.chatclient--username {
+  font-weight: 600;
+  color: #262626;
+  font-size: 15px;
+  margin-right: 5px;
+}
+
+.chatclient--timestamp {
+  font-size: 12px;
+}

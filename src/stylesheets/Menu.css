@@ -1,0 +1,43 @@
+.menu-wrapper {
+  flex: 0 0 200px;
+  max-width: 200px;
+  min-width: 200px;
+  width: 200px;
+  height: 100vh;
+  padding: 10px;
+  background-color: #00152A;
+}
+
+.menu--header {
+  border-bottom: solid 1px #fff;
+  padding-bottom: 10px;
+}
+
+.menu--header-room-text {
+  color: #1890ff;
+  margin-right: 5px;
+}
+
+.menu--header-room-id {
+  color: #f5222d;
+  border-radius: 5px;
+  background-color: #fff;
+  display: inline-block;
+  padding: 0 5px 0 5px;
+  overflow-wrap: break-word;
+  width: 180px;
+}
+
+.menu--content {
+  margin-top: 10px;
+}
+
+.menu--content-item {
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
+.menu--content-join-btn {
+  float: right;
+  margin-top: 5px;
+}

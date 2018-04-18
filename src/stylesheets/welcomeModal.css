@@ -1,0 +1,11 @@
+.welcomemodal--input-warning {
+  color: #f5222d;
+}
+
+.welcomemodal--content {
+  margin-bottom: 20px;
+}
+
+.welcomemodal--icon {
+  color: rgba(0,0,0,.25);
+}
