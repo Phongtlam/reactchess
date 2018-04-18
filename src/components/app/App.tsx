@@ -2,28 +2,12 @@ import * as React from 'react';
 import '../../stylesheets/App.css';
 import 'normalize.css';
 import 'antd/dist/antd.css';
-import { ConnectedRouter } from 'connected-react-router';
-import { history } from '@App/store';
-import { RootState } from '@App/store/reducers';
-import { connect, Dispatch } from 'react-redux';
-import { ActionCreatorsMapObject, bindActionCreators } from 'redux';
-// import TicTacToeBoard from '@App/components/tictactoe/TicTacToeBoard';
-import { tictactoeActions } from '@App/store/actions/tictactoe/tictactoeActions';
-// import { playerMove } from '../../store/thunk';
 import SocketIo from '../../socket.io.client';
 import WelcomeModal from '@App/components/WelcomeModal/WelcomeModal';
 import RoomDetails from '@App/components/RoomDetails/RoomDetails';
 import Menu from '@App/components/Menu/Menu';
 
 interface AppProps {
-  counter: Readonly<number>;
-  tictactoe: any;
-  actions: {
-    counter: { add: (n: number) => void },
-    tictactoeActions: {
-      placePiece: () => void
-     }
-  };
 }
 
 interface AppState {
@@ -67,41 +51,33 @@ class App extends React.Component<AppProps, AppState> {
 
   public render() {
     return (
-      <ConnectedRouter history={history}>
-        <div className="app">
-          {/* <TicTacToeBoard
-            board={this.props.tictactoe.tictactoeBoard}
-            actions={this.props.actions.tictactoeActions}
-            currentPlayer={this.props.tictactoe.currentPlayer}
-            winner={this.props.tictactoe.winner}
-          /> */}
-          <WelcomeModal
-            roomId={this.state.roomId}
-            subscribeUser={this.subscribeUser}
-          />
-          <Menu
-            roomId={this.state.roomId}
-            roomUsers={this.state.roomUsers}
-            currentUser={this.state.currentUser}
-            subscribeUser={this.subscribeUser}
-          />
-          <RoomDetails
-            onGameTypeSelected={this.onGameTypeSelected}
-            setOrientation={this.setOrientation}
-            resetGame={this.resetGame}
-            gameType={this.state.gameType}
-            isReset={this.state.isReset}
-            fen={this.state.fen}
-            afterUpdateCallback={this.afterUpdateCallback}
-            onMoveCallback={this.onMoveCallback}
-            gameStatus={this.state.gameStatus}
-            orientation={this.state.orientation}
-            roomUsers={this.state.roomUsers}
-            sendMessage={this.sendMessage}
-            messagesArray={this.state.messagesArray}
-          />
-        </div>
-      </ConnectedRouter>
+      <div className="app">
+        <WelcomeModal
+          roomId={this.state.roomId}
+          subscribeUser={this.subscribeUser}
+        />
+        <Menu
+          roomId={this.state.roomId}
+          roomUsers={this.state.roomUsers}
+          currentUser={this.state.currentUser}
+          subscribeUser={this.subscribeUser}
+        />
+        <RoomDetails
+          onGameTypeSelected={this.onGameTypeSelected}
+          setOrientation={this.setOrientation}
+          resetGame={this.resetGame}
+          gameType={this.state.gameType}
+          isReset={this.state.isReset}
+          fen={this.state.fen}
+          afterUpdateCallback={this.afterUpdateCallback}
+          onMoveCallback={this.onMoveCallback}
+          gameStatus={this.state.gameStatus}
+          orientation={this.state.orientation}
+          roomUsers={this.state.roomUsers}
+          sendMessage={this.sendMessage}
+          messagesArray={this.state.messagesArray}
+        />
+      </div>
     );
   }
 
@@ -129,17 +105,17 @@ class App extends React.Component<AppProps, AppState> {
     if (chessObj.turn() === this.state.orientation) {
       message = 'Your turn';
       type = 'success';
-      if (chessObj.in_check() && (!chessObj.in_checkmate() || (chessObj.move() && chessObj.move().length !== 0))) {
+      if (chessObj.in_check() && (!chessObj.in_checkmate() || chessObj.moves().length !== 0)) {
         message = 'You are being checked!';
         type = 'warning';
         showIcon = true;
-      } else if (chessObj.in_checkmate() || (chessObj.move() && chessObj.move().length === 0)) {
+      } else if (chessObj.in_checkmate() || chessObj.moves().length === 0) {
         message = 'You\'ve lost!';
         type = 'error';
         showIcon = true;
       }
     } else {
-      if (chessObj.in_checkmate() || (chessObj.move() && chessObj.move().length === 0)) {
+      if (chessObj.in_checkmate() || chessObj.moves().length === 0) {
         message = 'Congratulations! You\'ve won!';
         type = 'success';
         showIcon = true;
@@ -222,16 +198,4 @@ class App extends React.Component<AppProps, AppState> {
   }
 }
 
-function mapStateToProps(state: RootState, ownProps: object) {
-  return {
-    tictactoe: state.tictactoe
-  };
-}
-
-function mapDispatchToProps(dispatch: Dispatch<RootState>) {
-  return {
-    actions: bindActionCreators<ActionCreatorsMapObject>(tictactoeActions, dispatch),
-  };
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;
