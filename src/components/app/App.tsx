@@ -10,12 +10,10 @@ import { ActionCreatorsMapObject, bindActionCreators } from 'redux';
 // import TicTacToeBoard from '@App/components/tictactoe/TicTacToeBoard';
 import { tictactoeActions } from '@App/store/actions/tictactoe/tictactoeActions';
 // import { playerMove } from '../../store/thunk';
-// import Chessboard from '@App/components/Chess/Chessboard';
 import SocketIo from '../../socket.io.client';
 import WelcomeModal from '@App/components/WelcomeModal/WelcomeModal';
 import RoomDetails from '@App/components/RoomDetails/RoomDetails';
 import Menu from '@App/components/Menu/Menu';
-// import ChessFooter from '@App/components/ChessFooter/ChessFooter';
 
 interface AppProps {
   counter: Readonly<number>;
@@ -121,16 +119,10 @@ class App extends React.Component<AppProps, AppState> {
     });
   }
 
-  private onMoveCallback = (chessObj) => {
-    SocketIo.emit(
-      'board-update',
-      chessObj.fen(),
-      this.state.gameType === 'ai' ? true : false, false,
-      this.state.orientation
-    );
-  }
-
-  private afterUpdateCallback = (chessObj) => {
+  private updateGameStatus = (chessObj) => {
+    if (this.state.fen === 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1') {
+      return;
+    }
     let message = 'normal';
     let type: 'success' | 'info' | 'warning' | 'error' = 'info';
     let showIcon = false;
@@ -147,7 +139,7 @@ class App extends React.Component<AppProps, AppState> {
         showIcon = true;
       }
     } else {
-      if (chessObj.in_checkmate() || chessObj.move() === []) {
+      if (chessObj.in_checkmate() || (chessObj.move() && chessObj.move().length === 0)) {
         message = 'Congratulations! You\'ve won!';
         type = 'success';
         showIcon = true;
@@ -160,9 +152,23 @@ class App extends React.Component<AppProps, AppState> {
       gameStatus: {
         message,
         type,
-        showIcon
+        showIcon,
       }
     });
+  }
+
+  private onMoveCallback = (chessObj) => {
+    SocketIo.emit(
+      'board-update',
+      chessObj.fen(),
+      this.state.gameType === 'ai' ? true : false, false,
+      this.state.orientation,
+    );
+    this.updateGameStatus(chessObj);
+  }
+
+  private afterUpdateCallback = (chessObj) => {
+    this.updateGameStatus(chessObj);
   }
 
   private updateBoardListener = (fen) => {

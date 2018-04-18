@@ -4,4 +4,32 @@
 
 .roomdetails--mid-pane {
   margin-right: 20px;
+  background-color: #e6f7ff;
+  width: 200px;
+  padding: 10px;
+  height: 500px;
+  border: solid 1px #91d5ff;
 }
+
+.roomdetails--mid-pane-title {
+  /* background-color: #efdbff; */
+  text-align: center;
+  height: 50px;
+  line-height: 50px;
+  font-weight: 600;
+  font-size: 20px;
+  color: #003a8c;
+  border-bottom: solid 1px #91d5ff;
+}
+
+.roomdetails--mid-pane-users {
+  height: 400px;
+  overflow-y: scroll;
+}
+
+.roomdetails--mid-pane-user {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+

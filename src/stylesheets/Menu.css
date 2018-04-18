@@ -32,6 +32,11 @@
   margin-top: 10px;
 }
 
+.menu--content-item {
+  display: inline-block;
+  margin-bottom: 5px;
+}
+
 .menu--content-join-btn {
   float: right;
   margin-top: 5px;

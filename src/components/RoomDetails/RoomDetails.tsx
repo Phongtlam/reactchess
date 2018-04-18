@@ -34,8 +34,10 @@ const RoomDetails = (props) => {
           />
         </div>
         <div className="roomdetails--mid-pane">
-          <p>Total players: {props.roomUsers.length}</p>
-          {props.roomUsers.map( (user, i) => <p key={i}>{user}</p>)}
+          <p className="roomdetails--mid-pane-title">Users</p>
+          <div className="roomdetails--mid-pane-users">
+            {props.roomUsers.map( (user, i) => <p className="roomdetails--mid-pane-user" key={i}>{user}</p>)}
+          </div>
         </div>
         <ChatClient sendMessage={props.sendMessage} messagesArray={props.messagesArray} />
       </div>
