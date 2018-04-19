@@ -1,6 +1,5 @@
 const socketIo = require('socket.io');
 const Chess = require('../../src/components/Chess/chess').Chess;
-const schedule = require('node-schedule');
 const YellowSubsAction = require('../yellowsub.ai');
 const redisClient = require('../redis');
 const shortid = require('shortid');
@@ -12,8 +11,8 @@ module.exports = (server) => {
   io.on('connect', (socket) => {
     console.log('new user connected on socketId', socket.id); 
     
-    const emitter = (roomId, channel, payload, otherOnly) => {
-      if (otherOnly) {
+    const emitter = (roomId, channel, payload, othersOnly) => {
+      if (othersOnly) {
         socket.to(roomId).emit(channel, payload);
       } else {
         io.in(roomId).emit(channel, payload);
