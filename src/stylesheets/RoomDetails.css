@@ -3,7 +3,7 @@
 }
 
 .roomdetails--mid-pane {
-  margin-right: 30px;
+  margin-right: 20px;
   background-color: #e6f7ff;
   width: 200px;
   padding: 10px;
@@ -12,6 +12,7 @@
 }
 
 .roomdetails--mid-pane-title {
+  /* background-color: #efdbff; */
   text-align: center;
   height: 50px;
   line-height: 50px;

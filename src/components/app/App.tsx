@@ -191,6 +191,7 @@ class App extends React.Component<AppProps, AppState> {
   }
 
   private newUserListener = (newUserObj) => {
+    console.log('what is new users', newUserObj);
     this.setState({
       roomId: newUserObj.roomId,
       roomUsers: newUserObj.roomUsers
