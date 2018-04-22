@@ -183,7 +183,7 @@ class App extends React.Component<AppProps, AppState> {
 
   private newMessageListener = (messageObj) => {
     if (messageObj.userName === this.state.currentUser) {
-      messageObj.isSelf = true;
+      messageObj.from = 'self';
     }
     this.setState({
       messagesArray: [...this.state.messagesArray, messageObj]

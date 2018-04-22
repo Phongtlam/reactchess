@@ -16,6 +16,20 @@
   float: right;
 }
 
+.chatclient-wrapper.chatbot {
+  border-radius: 5px;
+  background-color: #f6ffed;
+  border: 1px solid #b7eb8f;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 5px;
+}
+
+.chatclient-wrapper.chatbot img {
+  height: 40px;
+  margin-right: 10px;
+}
+
 .chatclient--message {
   width: 200px;
   position: relative;
@@ -59,6 +73,12 @@
   color: #8c8c8c;
   line-height: normal;
   padding: 5px;
+}
+
+.chatclient-user.chatbot {
+  color: #f5222d;
+  font-size: 16px;
+  font-weight: 600;
 }
 
 .chatclient--user.self {

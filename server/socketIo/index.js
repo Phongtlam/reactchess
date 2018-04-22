@@ -12,11 +12,14 @@ module.exports = (server) => {
     console.log('new user connected on socketId', socket.id); 
     
     const emitter = (roomId, channel, payload, othersOnly) => {
-      if (othersOnly) {
-        socket.to(roomId).emit(channel, payload);
-      } else {
-        io.in(roomId).emit(channel, payload);
-      }
+      return new Promise( (resolve, reject) => {
+        if (othersOnly) {
+          socket.to(roomId).emit(channel, payload);
+        } else {
+          io.in(roomId).emit(channel, payload);
+        }
+        resolve();
+      })
     };
 
     redisClient.keys('*', (err, roomList) => {
@@ -40,7 +43,17 @@ module.exports = (server) => {
           userName,
           roomId,
           roomUsers
-        });
+        }).then( () => {
+          emitter(socket.id, 'message', {
+            from: 'chatbot',
+            roomId,
+            message: ''
+          });
+          emitter(roomId, 'message', {
+            from: 'chatbot',
+            message: `${userInfo.userName} has join the room`,
+          }, true);
+        })
       }
       getUsersCount(roomId, emitNewUser);
     });

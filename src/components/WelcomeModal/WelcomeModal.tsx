@@ -7,8 +7,9 @@ interface ModalState {
   visible: boolean;
   nameInput: string;
   modalStage: number;
-  needNameInput: boolean;
+  needDiffName: boolean;
   roomId: string;
+  typeofDiffName: string;
 }
 
 interface ModalProps {
@@ -23,7 +24,8 @@ class WelcomeModal extends React.Component<ModalProps, ModalState> {
     nameInput: '',
     roomId: '',
     modalStage: 0,
-    needNameInput: false
+    needDiffName: false,
+    typeofDiffName: ''
   };
 
   constructor(props) {
@@ -37,6 +39,14 @@ class WelcomeModal extends React.Component<ModalProps, ModalState> {
 
   public render() {
     let content;
+    let warningMessage: any = null;
+    if (this.state.needDiffName) {
+      if (this.state.typeofDiffName === 'blank') {
+        warningMessage = 'Please input a valid name';
+      } else if (this.state.typeofDiffName === 'chatbot') {
+        warningMessage = 'Please input a non reserved name';
+      }
+    }
     switch (this.state.modalStage) {
       case 0:
         content = (
@@ -50,8 +60,8 @@ class WelcomeModal extends React.Component<ModalProps, ModalState> {
               onPressEnter={this.handleNext}
             />
             {
-              this.state.needNameInput &&
-              <p className="welcomemodal--input-warning">Please input a valid name</p>
+              this.state.needDiffName &&
+              <p className="welcomemodal--input-warning">{warningMessage}</p>
             }
           </div>
         );
@@ -92,8 +102,12 @@ class WelcomeModal extends React.Component<ModalProps, ModalState> {
   }
 
   private handleNext = (e) => {
-    if (this.state.nameInput === '') {
-      this.setState({ needNameInput: true });
+    if (this.state.nameInput === '' || this.state.nameInput === 'Chat Bot') {
+      const type = this.state.nameInput === 'Chat Bot' ? 'chatbot' : 'blank';
+      this.setState({
+        needDiffName: true,
+        typeofDiffName: type
+      });
       return;
     }
     if (this.state.modalStage === 1) {
@@ -110,7 +124,7 @@ class WelcomeModal extends React.Component<ModalProps, ModalState> {
     }
     this.setState({
       modalStage: this.state.modalStage + 1,
-      needNameInput: false
+      needDiffName: false
     });
   }
 
