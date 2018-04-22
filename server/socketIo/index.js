@@ -1,6 +1,6 @@
 const socketIo = require('socket.io');
-const Chess = require('../../src/components/Chess/chess').Chess;
-const YellowSubsAction = require('../yellowsub.ai');
+const Chess = require('../../src/lib/chess').Chess;
+const YellowSubsAction = require('../../src/lib/yellowsub.ai');
 const redisClient = require('../redis');
 const shortid = require('shortid');
 
@@ -12,14 +12,11 @@ module.exports = (server) => {
     console.log('new user connected on socketId', socket.id); 
     
     const emitter = (roomId, channel, payload, othersOnly) => {
-      return new Promise( (resolve, reject) => {
-        if (othersOnly) {
-          socket.to(roomId).emit(channel, payload);
-        } else {
-          io.in(roomId).emit(channel, payload);
-        }
-        resolve();
-      })
+      if (othersOnly) {
+        socket.to(roomId).emit(channel, payload);
+      } else {
+        io.in(roomId).emit(channel, payload);
+      }
     };
 
     redisClient.keys('*', (err, roomList) => {
@@ -43,18 +40,17 @@ module.exports = (server) => {
           userName,
           roomId,
           roomUsers
-        }).then( () => {
-          emitter(socket.id, 'message', {
-            from: 'chatbot',
-            roomId,
-            message: ''
-          });
-          emitter(roomId, 'message', {
-            from: 'chatbot',
-            message: `${userInfo.userName} has join the room`,
-          }, true);
-        })
-      }
+        });
+        emitter(socket.id, 'message', {
+          from: 'chatbot',
+          roomId,
+          message: ''
+        });
+        emitter(roomId, 'message', {
+          from: 'chatbot',
+          message: `${userInfo.userName} has join the room`,
+        }, true);
+      };
       getUsersCount(roomId, emitNewUser);
     });
 
@@ -72,6 +68,7 @@ module.exports = (server) => {
           console.log('round 10 started');
         }
         const color = orientation === 'w' ? 'b' : 'w';
+        console.log('what is color', color)
         if (game.turn() === color) {
           const bestMove = YellowSubsAction(2, game, true, numRounds, color);
           game.move(bestMove);

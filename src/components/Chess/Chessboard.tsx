@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as ChessBoardjs from 'chessboardjs';
 import { hoverHighlights } from './chessboardHelper';
 import '@App/stylesheets/Chessboard.css';
-const Chess = require('./chess');
+const Chess = require('../../lib/chess');
 
 interface ChessboardProps {
   isReset?: boolean;
